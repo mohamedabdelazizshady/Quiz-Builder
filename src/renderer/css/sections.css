@@ -1,0 +1,116 @@
+﻿/*
+ * sections.css
+ * أنماط إضافية مخصصة لكل قسم في الداشبورد.
+ */
+
+#questionTypeDynamicFields {
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.choice-editor-list,
+.ordering-list,
+.matching-list,
+.fill-answer-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.choice-editor-row,
+.ordering-row,
+.matching-row,
+.fill-answer-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  gap: 0.45rem;
+  align-items: center;
+}
+
+.choice-index,
+.order-index {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-primary) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-primary) 30%, transparent);
+  display: grid;
+  place-items: center;
+  font-size: 0.75rem;
+}
+
+.question-type-marker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  color: var(--color-text-soft);
+}
+
+.qtype-single {
+  color: var(--type-single);
+}
+
+.qtype-multiple {
+  color: var(--type-multiple);
+}
+
+.qtype-true-false {
+  color: var(--type-true-false);
+}
+
+.qtype-ordering {
+  color: var(--type-ordering);
+}
+
+.qtype-matching {
+  color: var(--type-matching);
+}
+
+.qtype-fill-blank {
+  color: var(--type-fill-blank);
+}
+
+.media-mini-icons {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.media-mini-icons span {
+  width: 24px;
+  height: 24px;
+  border-radius: 7px;
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--color-primary) 11%, transparent);
+}
+
+.media-mini-icons i {
+  width: 14px;
+  height: 14px;
+}
+
+.dynamic-choice-explanation {
+  grid-column: 1 / -1;
+}
+
+.empty-state {
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  text-align: center;
+  padding: 1.4rem;
+  color: var(--color-text-soft);
+}
+
+#questionTypeStats .stat-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  display: inline-block;
+  margin-inline-end: 0.3rem;
+}

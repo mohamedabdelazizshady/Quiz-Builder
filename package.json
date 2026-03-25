@@ -1,0 +1,54 @@
+{
+  "name": "quiz-builder-pro",
+  "version": "1.0.0",
+  "description": "Advanced interactive quiz desktop builder powered by Electron and Vanilla JS",
+  "main": "src/main/main.js",
+  "author": "Quiz Builder Pro Team",
+  "license": "MIT",
+  "type": "commonjs",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "keywords": [
+    "electron",
+    "quiz",
+    "quiz-builder",
+    "education",
+    "desktop"
+  ],
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.0.0"
+  },
+  "build": {
+    "appId": "com.quizbuilderpro.app",
+    "productName": "Quiz Builder Pro",
+    "directories": {
+      "output": "dist",
+      "buildResources": "assets"
+    },
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "package.json",
+      "README.md",
+      "LICENSE"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icons/icon.ico"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "assets/icons/icon.icns"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "assets/icons/icon.png"
+    }
+  }
+}

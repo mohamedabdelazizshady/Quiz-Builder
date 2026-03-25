@@ -1,0 +1,90 @@
+﻿/*
+ * animations.css
+ * جميع التحريكات والانتقالات المخصصة.
+ */
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spin {
+  animation: spin 2s linear infinite;
+}
+
+@keyframes fade-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse-soft {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03);
+  }
+}
+
+@keyframes pop-in {
+  from {
+    transform: scale(0.94);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-pop {
+  animation: pop-in 0.25s ease;
+}
+
+.pulse-on-hover:hover {
+  animation: pulse-soft 0.9s ease infinite;
+}
+
+.transition-fade {
+  transition: opacity 0.45s ease;
+}
+
+.transition-slide-right {
+  transition: transform 0.45s ease, opacity 0.45s ease;
+}
+
+.transition-slide-up {
+  transition: transform 0.45s ease, opacity 0.45s ease;
+}
+
+.transition-zoom {
+  transition: transform 0.45s ease, opacity 0.45s ease;
+}
+
+.transition-flip {
+  transition: transform 0.55s ease, opacity 0.45s ease;
+  transform-style: preserve-3d;
+}

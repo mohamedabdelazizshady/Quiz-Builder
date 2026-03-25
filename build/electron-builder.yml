@@ -1,0 +1,26 @@
+﻿appId: com.quizbuilderpro.app
+productName: Quiz Builder Pro
+directories:
+  output: dist
+  buildResources: assets
+files:
+  - src/**/*
+  - assets/**/*
+  - package.json
+  - README.md
+  - LICENSE
+win:
+  target:
+    - nsis
+  icon: assets/icons/icon.ico
+mac:
+  target:
+    - dmg
+  icon: assets/icons/icon.icns
+linux:
+  target:
+    - AppImage
+  icon: assets/icons/icon.png
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true

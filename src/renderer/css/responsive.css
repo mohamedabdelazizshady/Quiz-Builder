@@ -1,0 +1,97 @@
+﻿/*
+ * responsive.css
+ * Media queries لدعم الشاشات المختلفة.
+ */
+
+@media (max-width: 1280px) {
+  .app-shell {
+    grid-template-columns: 250px 1fr;
+  }
+
+  .theme-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .export-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1024px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto 1fr;
+    grid-template-areas:
+      'topbar'
+      'sidebar'
+      'main';
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .sidebar {
+    flex-direction: row;
+    gap: 0.8rem;
+    overflow-x: auto;
+    align-items: center;
+  }
+
+  .sidebar__brand,
+  .sidebar__footer {
+    display: none;
+  }
+
+  .sidebar__nav {
+    flex-direction: row;
+    min-width: max-content;
+  }
+
+  .main-content {
+    min-height: calc(100vh - 220px);
+  }
+
+  .question-type-tabs {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .form-grid,
+  .result-ranges,
+  .export-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .toolbar-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .top-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.65rem;
+  }
+
+  .top-bar__actions {
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+
+  .question-item {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+
+  .question-actions-inline {
+    justify-content: flex-end;
+  }
+
+  .preset-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .theme-grid,
+  .export-grid {
+    grid-template-columns: 1fr;
+  }
+}

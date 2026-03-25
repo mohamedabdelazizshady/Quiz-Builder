@@ -1,0 +1,423 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Builder Pro</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Cairo:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <link rel="stylesheet" href="./css/dashboard.css">
+</head>
+<body>
+  <div id="app" class="app-shell">
+    <header class="top-bar glass-card">
+      <div class="top-bar__left">
+        <h1 id="projectNameText" class="project-name">مشروع جديد - Quiz Builder Pro</h1>
+        <span id="projectStatusBadge" class="status-badge">غير محفوظ</span>
+      </div>
+
+      <div class="top-bar__actions">
+        <button id="quickSaveBtn" class="btn btn-primary" type="button">
+          <i data-lucide="save"></i>
+          <span>حفظ سريع</span>
+        </button>
+        <button id="themeToggleBtn" class="btn btn-ghost" type="button" aria-label="Toggle Theme">
+          <i data-lucide="moon-star"></i>
+          <span>الوضع الداكن</span>
+        </button>
+        <button id="openSettingsBtn" class="btn btn-ghost" type="button">
+          <i data-lucide="settings-2"></i>
+          <span>الإعدادات</span>
+        </button>
+      </div>
+    </header>
+
+    <aside class="sidebar glass-card">
+      <div class="sidebar__brand">
+        <div class="brand-mark">QB</div>
+        <div>
+          <h2>Quiz Builder Pro</h2>
+          <p>Interactive Quiz Studio</p>
+        </div>
+      </div>
+
+      <nav class="sidebar__nav" aria-label="Primary Navigation">
+        <button class="nav-link is-active" type="button" data-route="general">
+          <i data-lucide="sliders-horizontal"></i>
+          <span>إعدادات الكويز</span>
+        </button>
+        <button class="nav-link" type="button" data-route="add-question">
+          <i data-lucide="plus-circle"></i>
+          <span>إضافة سؤال</span>
+        </button>
+        <button class="nav-link" type="button" data-route="questions-list">
+          <i data-lucide="list-todo"></i>
+          <span>قائمة الأسئلة</span>
+          <span id="questionCountBadge" class="nav-badge">0</span>
+        </button>
+        <button class="nav-link" type="button" data-route="theme">
+          <i data-lucide="palette"></i>
+          <span>تخصيص المظهر</span>
+        </button>
+        <button class="nav-link" type="button" data-route="results">
+          <i data-lucide="trophy"></i>
+          <span>إعدادات النتيجة</span>
+        </button>
+        <button class="nav-link" type="button" data-route="settings">
+          <i data-lucide="settings"></i>
+          <span>إعدادات التطبيق</span>
+        </button>
+        <button class="nav-link" type="button" data-route="export">
+          <i data-lucide="file-output"></i>
+          <span>التصدير والحفظ</span>
+        </button>
+      </nav>
+
+      <div class="sidebar__footer">
+        <small>v1.0.0</small>
+        <a href="https://github.com/your-username/quiz-builder-pro" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <section class="dashboard-section is-active" data-section="general" id="generalSettingsSection">
+        <div class="section-header">
+          <h3><i data-lucide="sliders-horizontal"></i> إعدادات الكويز العامة</h3>
+          <p>اضبط المعلومات الأساسية قبل إضافة الأسئلة.</p>
+        </div>
+
+        <div class="form-grid">
+          <label class="form-field">
+            <span>عنوان الكويز *</span>
+            <input id="quizTitleInput" type="text" placeholder="أدخل عنوان الكويز..." required>
+          </label>
+
+          <label class="form-field form-field--full">
+            <span>وصف الكويز</span>
+            <div class="inline-toolbar">
+              <button type="button" class="btn btn-tiny btn-secondary-light" data-format="bold"><i data-lucide="bold"></i></button>
+              <button type="button" class="btn btn-tiny btn-secondary-light" data-format="italic"><i data-lucide="italic"></i></button>
+            </div>
+            <textarea id="quizDescriptionInput" rows="4" placeholder="وصف اختياري..."></textarea>
+          </label>
+
+          <div class="form-field">
+            <span>صورة الغلاف</span>
+            <button id="quizCoverBtn" class="btn btn-outline" type="button">اختيار صورة</button>
+            <div id="quizCoverPreview" class="media-preview media-preview--small"></div>
+          </div>
+
+          <label class="form-field">
+            <span>اسم المؤلف</span>
+            <input id="authorNameInput" type="text" placeholder="اسم المؤلف">
+          </label>
+
+          <label class="form-field">
+            <span>مدة الكويز (دقائق)</span>
+            <input id="quizDurationInput" type="number" min="0" step="1" value="0">
+          </label>
+
+          <fieldset class="form-field fieldset-group">
+            <legend>عند انتهاء الوقت</legend>
+            <label><input type="radio" name="timeExpiryAction" value="auto-submit" checked> إنهاء تلقائي</label>
+            <label><input type="radio" name="timeExpiryAction" value="allow-continue"> السماح بالاستمرار</label>
+          </fieldset>
+
+          <fieldset class="form-field fieldset-group">
+            <legend>اتجاه الكويز</legend>
+            <label><input type="radio" name="quizDirection" value="rtl" checked> RTL</label>
+            <label><input type="radio" name="quizDirection" value="ltr"> LTR</label>
+          </fieldset>
+
+          <fieldset class="form-field fieldset-group">
+            <legend>وقت عرض النتيجة</legend>
+            <label><input type="radio" name="resultMode" value="end" checked> في النهاية فقط</label>
+            <label><input type="radio" name="resultMode" value="per-question"> بعد كل سؤال</label>
+          </fieldset>
+
+          <fieldset class="form-field form-field--full checkbox-grid">
+            <legend>خيارات إضافية</legend>
+            <label><input id="optShuffleQuestions" type="checkbox"> ترتيب الأسئلة عشوائياً</label>
+            <label><input id="optShuffleChoices" type="checkbox"> ترتيب الاختيارات عشوائياً</label>
+            <label><input id="optShowQuestionNumbers" type="checkbox" checked> إظهار رقم السؤال</label>
+            <label><input id="optAllowBack" type="checkbox" checked> السماح بالرجوع</label>
+            <label><input id="optShowProgress" type="checkbox" checked> إظهار شريط التقدم</label>
+            <label><input id="optEnableSounds" type="checkbox" checked> تفعيل المؤثرات الصوتية</label>
+          </fieldset>
+        </div>
+      </section>
+
+      <section class="dashboard-section" data-section="add-question" id="addQuestionSection">
+        <div class="section-header">
+          <h3><i data-lucide="plus-circle"></i> إضافة سؤال</h3>
+          <p>اختر نوع السؤال ثم أدخل البيانات المطلوبة.</p>
+        </div>
+
+        <div class="question-type-tabs" id="questionTypeTabs">
+          <button class="tab-btn is-active" data-question-type="single" type="button">اختيار واحد</button>
+          <button class="tab-btn" data-question-type="multiple" type="button">اختيار متعدد</button>
+          <button class="tab-btn" data-question-type="true-false" type="button">صح / خطأ</button>
+          <button class="tab-btn" data-question-type="ordering" type="button">ترتيب</button>
+          <button class="tab-btn" data-question-type="matching" type="button">توصيل</button>
+          <button class="tab-btn" data-question-type="fill-blank" type="button">أكمل الفراغ</button>
+        </div>
+
+        <form id="questionForm" class="question-form">
+          <input type="hidden" id="questionEditingId" value="">
+          <label class="form-field form-field--full">
+            <span>نص السؤال *</span>
+            <textarea id="questionTextInput" rows="3" placeholder="أدخل نص السؤال..." required></textarea>
+          </label>
+
+          <details class="media-collapsible" open>
+            <summary><i data-lucide="paperclip"></i> الوسائط المتعددة</summary>
+            <div class="media-actions">
+              <button class="btn btn-outline" id="addQuestionImageBtn" type="button"><i data-lucide="image"></i><span>صورة</span></button>
+              <button class="btn btn-outline" id="addQuestionAudioBtn" type="button"><i data-lucide="volume-2"></i><span>صوت</span></button>
+              <label class="youtube-field">
+                <span><i data-lucide="video"></i> رابط YouTube</span>
+                <input id="questionYoutubeInput" type="url" placeholder="https://youtube.com/watch?v=...">
+              </label>
+            </div>
+            <div id="questionMediaPreview" class="media-preview-grid"></div>
+          </details>
+
+          <div id="questionTypeDynamicFields" class="dynamic-fields"></div>
+
+          <label class="form-field">
+            <span>درجة السؤال</span>
+            <input id="questionScoreInput" type="number" min="1" step="1" value="1">
+          </label>
+
+          <div class="question-actions">
+            <button id="saveQuestionBtn" class="btn btn-primary" type="submit"><i data-lucide="save"></i><span>إضافة السؤال</span></button>
+            <button id="clearQuestionBtn" class="btn btn-danger-light" type="button"><i data-lucide="refresh-ccw"></i><span>مسح الحقول</span></button>
+            <button id="cancelEditQuestionBtn" class="btn btn-ghost hidden" type="button"><i data-lucide="x"></i><span>إلغاء التعديل</span></button>
+            <button id="previewQuestionBtn" class="btn btn-outline" type="button"><i data-lucide="eye"></i><span>معاينة السؤال</span></button>
+          </div>
+        </form>
+      </section>
+
+      <section class="dashboard-section" data-section="questions-list" id="questionsListSection">
+        <div class="section-header section-header--between">
+          <div>
+            <h3><i data-lucide="list-todo"></i> قائمة الأسئلة</h3>
+            <p id="questionsSummaryText">إجمالي الأسئلة: 0 | الدرجة الكلية: 0</p>
+          </div>
+          <div class="inline-stats" id="questionTypeStats"></div>
+        </div>
+
+        <div class="toolbar-grid">
+          <label class="form-field">
+            <span>فلترة النوع</span>
+            <select id="filterQuestionTypeSelect">
+              <option value="all">الكل</option>
+              <option value="single">اختيار واحد</option>
+              <option value="multiple">اختيار متعدد</option>
+              <option value="true-false">صح/خطأ</option>
+              <option value="ordering">ترتيب</option>
+              <option value="matching">توصيل</option>
+              <option value="fill-blank">أكمل الفراغ</option>
+            </select>
+          </label>
+
+          <label class="form-field form-field--full">
+            <span>بحث</span>
+            <input id="questionSearchInput" type="search" placeholder="ابحث داخل نص السؤال...">
+          </label>
+        </div>
+
+        <div id="questionsList" class="questions-list"></div>
+      </section>
+
+      <section class="dashboard-section" data-section="theme" id="themeSection">
+        <div class="section-header">
+          <h3><i data-lucide="palette"></i> تخصيص المظهر والألوان</h3>
+          <p>اختر قالب جاهز أو عدّل التفاصيل الدقيقة.</p>
+        </div>
+
+        <div id="themePresets" class="preset-grid"></div>
+
+        <div class="theme-grid">
+          <div class="theme-card">
+            <h4>الألوان</h4>
+            <div id="colorPickersContainer" class="color-pickers"></div>
+          </div>
+
+          <div class="theme-card">
+            <h4>الخط والتصميم</h4>
+            <label class="form-field">
+              <span>الخط</span>
+              <select id="fontFamilySelect"></select>
+            </label>
+            <label class="form-field">
+              <span>حجم الخط: <strong id="fontSizeValue">16px</strong></span>
+              <input id="fontSizeRange" type="range" min="12" max="24" value="16">
+            </label>
+            <label class="form-field">
+              <span>وزن الخط: <strong id="fontWeightValue">600</strong></span>
+              <input id="fontWeightRange" type="range" min="300" max="800" step="100" value="600">
+            </label>
+            <label class="form-field">
+              <span>استدارة الزوايا: <strong id="radiusValue">14px</strong></span>
+              <input id="radiusRange" type="range" min="0" max="30" value="14">
+            </label>
+          </div>
+
+          <div class="theme-card">
+            <h4>المؤثرات</h4>
+            <label class="form-field">
+              <span>نوع الانتقال</span>
+              <select id="transitionSelect">
+                <option value="fade">Fade</option>
+                <option value="slide-right">Slide Right</option>
+                <option value="slide-up">Slide Up</option>
+                <option value="zoom">Zoom</option>
+                <option value="flip">Flip</option>
+                <option value="none">None</option>
+              </select>
+            </label>
+            <label class="form-field">
+              <span>سرعة الحركة: <strong id="transitionSpeedValue">0.45s</strong></span>
+              <input id="transitionSpeedRange" type="range" min="0.2" max="1" step="0.05" value="0.45">
+            </label>
+            <label class="switch-field"><input id="glassToggle" type="checkbox"> تفعيل Glassmorphism</label>
+            <label class="switch-field"><input id="shadowToggle" type="checkbox" checked> تفعيل الظلال</label>
+          </div>
+        </div>
+
+        <div class="live-preview-panel">
+          <h4>Live Preview</h4>
+          <div id="themeLivePreview" class="preview-card">
+            <h5>سؤال تجريبي</h5>
+            <p>ما هي عاصمة مصر؟</p>
+            <div class="preview-options">
+              <button class="preview-option is-correct" type="button">القاهرة</button>
+              <button class="preview-option" type="button">الإسكندرية</button>
+              <button class="preview-option" type="button">الأقصر</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="dashboard-section" data-section="results" id="resultsSection">
+        <div class="section-header">
+          <h3><i data-lucide="trophy"></i> إعدادات صفحة النتيجة</h3>
+          <p>خصص رسائل التقييم وخيارات النتيجة النهائية.</p>
+        </div>
+
+        <div id="resultRangesContainer" class="result-ranges"></div>
+
+        <fieldset class="form-field checkbox-grid">
+          <legend>خيارات النتيجة</legend>
+          <label><input id="resShowCircle" type="checkbox" checked> عرض الرسم الدائري</label>
+          <label><input id="resShowAnswers" type="checkbox" checked> عرض الإجابات الصحيحة</label>
+          <label><input id="resShowChoiceExplanations" type="checkbox" checked> عرض تفسير كل اختيار</label>
+          <label><input id="resShowTimer" type="checkbox" checked> إظهار الوقت المستغرق</label>
+          <label><input id="resAllowRetry" type="checkbox" checked> السماح بإعادة المحاولة</label>
+          <label><input id="resDetailedStats" type="checkbox" checked> إظهار إحصائيات تفصيلية</label>
+          <label><input id="resShareButton" type="checkbox" checked> زر مشاركة النتيجة</label>
+        </fieldset>
+      </section>
+
+      <section class="dashboard-section" data-section="settings" id="appSettingsSection">
+        <div class="section-header">
+          <h3><i data-lucide="settings"></i> إعدادات التطبيق</h3>
+          <p>تحكم في سلوك الواجهة والإعدادات العامة للتجربة.</p>
+        </div>
+
+        <div class="theme-grid">
+          <div class="theme-card">
+            <h4>إعدادات عامة</h4>
+            <label class="form-field">
+              <span>لغة الواجهة</span>
+              <select id="appLanguageSelect">
+                <option value="ar">العربية</option>
+                <option value="en">English</option>
+              </select>
+            </label>
+
+            <label class="form-field">
+              <span>القسم الافتراضي عند التشغيل</span>
+              <select id="appDefaultRouteSelect">
+                <option value="general">إعدادات الكويز</option>
+                <option value="add-question">إضافة سؤال</option>
+                <option value="questions-list">قائمة الأسئلة</option>
+                <option value="theme">تخصيص المظهر</option>
+                <option value="results">إعدادات النتيجة</option>
+                <option value="settings">إعدادات التطبيق</option>
+                <option value="export">التصدير والحفظ</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="theme-card">
+            <h4>سلوك التحرير</h4>
+            <label class="form-field">
+              <span>الدرجة الافتراضية للسؤال الجديد</span>
+              <input id="appDefaultScoreInput" type="number" min="1" max="20" step="1" value="1">
+            </label>
+            <label class="switch-field">
+              <input id="appConfirmDeleteChk" type="checkbox" checked>
+              طلب تأكيد قبل حذف السؤال
+            </label>
+            <label class="switch-field">
+              <input id="appShowTipsChk" type="checkbox" checked>
+              عرض تلميحات الاستخدام
+            </label>
+          </div>
+
+          <div class="theme-card">
+            <h4>الواجهة والأداء</h4>
+            <label class="switch-field">
+              <input id="appCompactSidebarChk" type="checkbox">
+              تفعيل وضع Sidebar المدمج
+            </label>
+            <label class="switch-field">
+              <input id="appReduceMotionChk" type="checkbox">
+              تقليل الحركات والانتقالات
+            </label>
+            <label class="switch-field">
+              <input id="appPersistSettingsChk" type="checkbox" checked>
+              حفظ إعدادات التطبيق محلياً
+            </label>
+            <button id="appSettingsResetBtn" class="btn btn-outline" type="button">
+              <i data-lucide="rotate-ccw"></i>
+              <span>إعادة الضبط الافتراضي</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="dashboard-section" data-section="export" id="exportSection">
+        <div class="section-header">
+          <h3><i data-lucide="file-output"></i> التصدير والحفظ</h3>
+          <p>معاينة وتصدير أو إدارة ملفات المشروع.</p>
+        </div>
+
+        <div id="exportStatsCards" class="export-stats"></div>
+
+        <div class="export-grid">
+          <button id="previewQuizBtn" class="export-card" type="button"><i data-lucide="eye"></i><span>معاينة الكويز</span></button>
+          <button id="exportHtmlBtn" class="export-card export-card--primary" type="button"><i data-lucide="file-text"></i><span>تصدير HTML</span></button>
+          <button id="saveProjectBtn" class="export-card" type="button"><i data-lucide="save"></i><span>حفظ المشروع</span></button>
+          <button id="openProjectBtn" class="export-card" type="button"><i data-lucide="folder-open"></i><span>فتح مشروع</span></button>
+          <button id="newProjectBtn" class="export-card" type="button"><i data-lucide="file-plus"></i><span>مشروع جديد</span></button>
+          <button id="exportQuestionsBtn" class="export-card" type="button"><i data-lucide="list-plus"></i><span>تصدير الأسئلة</span></button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="globalModalRoot"></div>
+  <div id="toastRoot" class="toast-root"></div>
+  <div id="lightboxRoot" class="lightbox-root hidden"></div>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+  <script type="module" src="./js/core/app.js"></script>
+</body>
+</html>
